@@ -372,7 +372,18 @@
   #info-modal button.close-btn:hover {
     color: #63a4ff;
   }
+
+  /* QR code container */
+  #whatsapp-qr {
+    margin-top: 30px;
+    text-align: center;
+    color: #1e90ff;
+  }
 </style>
+
+<!-- QR code lib -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
 </head>
 <body>
 
@@ -393,7 +404,7 @@
       <label for="games">🎮 Jeux demandés :</label>
       <textarea id="games" name="Jeux_demandes" rows="4" placeholder="Ex: FC 24, GTA V, Elden Ring..."></textarea>
 
-      <label for="email">📧 Ton email :</label>
+      <label for="email">📧 Votre email :</label>
       <input type="email" id="email" name="Email_client" required />
 
       <label for="whatsapp">📱 Numéro WhatsApp (optionnel) :</label>
@@ -401,12 +412,6 @@
 
       <label for="msg">💬 Remarques (optionnel) :</label>
       <textarea id="msg" name="Message_client" rows="3"></textarea>
-
-      <!-- Ajouts FormSubmit -->
-      <input type="hidden" name="_subject" value="Nouvelle commande SteamFlex Store 🚀" />
-      <input type="hidden" name="_template" value="table" />
-      <input type="hidden" name="_replyto" value="Email_client" />
-      <input type="hidden" name="_autoresponse" value="Merci pour votre commande, nous reviendrons vers vous rapidement." />
 
       <input type="hidden" name="_captcha" value="false" />
       <input type="hidden" name="_next" value="https://steamflex.github.io/Steamflex_store/merci.html" />
@@ -418,6 +423,12 @@
       <a href="https://wa.me/22776990692" target="_blank" rel="noopener noreferrer" aria-label="Contact WhatsApp">
         💬 Contactez-nous sur WhatsApp
       </a>
+    </div>
+
+    <!-- QR code WhatsApp -->
+    <div id="whatsapp-qr">
+      <h3>📱 Scannez pour nous contacter sur WhatsApp</h3>
+      <canvas id="qrcode"></canvas>
     </div>
   </section>
 </main>
@@ -483,6 +494,14 @@
     if(e.key === 'Escape' && infoModal.classList.contains('active')) {
       infoModal.classList.remove('active');
     }
+  });
+
+  // Génération QR code WhatsApp
+  const urlWhatsApp = "https://wa.me/22776990692"; // lien WhatsApp
+  const canvas = document.getElementById('qrcode');
+
+  QRCode.toCanvas(canvas, urlWhatsApp, { width: 180 }, function (error) {
+    if (error) console.error(error);
   });
 </script>
 
