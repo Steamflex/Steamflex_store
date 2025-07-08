@@ -2,69 +2,96 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Merci pour votre commande - SteamFlex Store</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #121212;
       color: #fff;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       height: 100vh;
+      margin: 0;
+      padding: 1rem;
       text-align: center;
-      padding: 2rem;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.light {
+      background: #f5f7fa;
+      color: #222;
     }
     h1 {
       color: #1e90ff;
-      font-size: 2.8rem;
       margin-bottom: 1rem;
     }
     p {
       font-size: 1.2rem;
-      margin-bottom: 1.5rem;
+      max-width: 400px;
+      margin-bottom: 2rem;
+      line-height: 1.4;
     }
-    #qrcode {
-      margin: 20px 0;
-      background: white;
-      padding: 10px;
-      border-radius: 12px;
-      display: inline-block;
+    a {
+      color: #1e90ff;
+      text-decoration: none;
+      font-weight: 600;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.3s;
     }
-    a.button {
-      display: inline-block;
-      padding: 12px 24px;
+    a:hover {
+      border-color: #1763c6;
+    }
+    button#toggle-mode {
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
       background: #1e90ff;
       color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: 700;
-      transition: background 0.3s;
+      cursor: pointer;
+      box-shadow: 0 4px 8px #1763c6cc;
+      transition: background 0.3s ease;
     }
-    a.button:hover {
+    button#toggle-mode:hover {
       background: #1763c6;
     }
   </style>
 </head>
 <body>
-  <h1>Merci pour votre commande !</h1>
-  <p>Nous avons bien reçu votre demande. Un email de confirmation vous a été envoyé.</p>
-  <p>Pour suivre l'état de votre commande, scannez le code QR ci-dessous ou cliquez sur le bouton.</p>
 
-  <div id="qrcode"></div>
+  <h1>🎉 Merci pour votre commande !</h1>
+  <p>
+    Nous avons bien reçu votre demande.<br />
+    Notre équipe vous contactera rapidement par email ou WhatsApp pour confirmer tout ça.<br />
+    Merci de votre confiance et à très bientôt sur SteamFlex Store !
+  </p>
 
-  <a href="https://steamflex.github.io/Steamflex_store/suivi.html" class="button" aria-label="Suivre ma commande">Suivre ma commande</a>
+  <a href="index.html" aria-label="Retour à la page d'accueil">← Retour à l'accueil</a>
 
-  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <button id="toggle-mode">🌙 Mode clair</button>
+
   <script>
-    // Ici tu peux modifier l'URL pour inclure un vrai identifiant de commande
-    const suiviUrl = 'https://steamflex.github.io/Steamflex_store/suivi.html';
+    const body = document.body;
+    const toggleBtn = document.getElementById('toggle-mode');
 
-    const qrcodeContainer = document.getElementById('qrcode');
-    QRCode.toCanvas(qrcodeContainer, suiviUrl, { width: 180 }, function (error) {
-      if (error) console.error(error);
-    });
+    if(localStorage.getItem('theme') === 'light') {
+      body.classList.add('light');
+      toggleBtn.textContent = '🌙 Mode sombre';
+    }
+
+    toggleBtn.onclick = () => {
+      body.classList.toggle('light');
+      if(body.classList.contains('light')) {
+        toggleBtn.textContent = '🌙 Mode sombre';
+        localStorage.setItem('theme', 'light');
+      } else {
+        toggleBtn.textContent = '☀️ Mode clair';
+        localStorage.setItem('theme', 'dark');
+      }
+    };
   </script>
+
 </body>
 </html>
