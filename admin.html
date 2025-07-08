@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - SteamFlex</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #121212;
+      color: #fff;
+    }
+    header {
+      background: #1e1e1e;
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      color: #1e90ff;
+    }
+    .login {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 80px;
+    }
+    .login input {
+      padding: 10px;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      border: none;
+      margin-top: 10px;
+      background: #2c2c2c;
+      color: #fff;
+    }
+    .login button {
+      padding: 10px 20px;
+      margin-top: 15px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 8px;
+      background: #1e90ff;
+      color: #fff;
+      cursor: pointer;
+    }
+    .panel {
+      display: none;
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .commande {
+      background: #1e1e1e;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      box-shadow: 0 0 10px #1e90ff88;
+    }
+    .commande p {
+      margin: 5px 0;
+    }
+    .statut {
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-weight: bold;
+      display: inline-block;
+    }
+    .attente {
+      background: #ff9800;
+    }
+    .paye {
+      background: #4caf50;
+    }
+    .livre {
+      background: #2196f3;
+    }
+    select {
+      margin-top: 10px;
+      padding: 5px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Panneau Admin - SteamFlex</h1>
+  </header>
+
+  <div class="login">
+    <p>Mot de passe requis :</p>
+    <input type="password" id="mdp" placeholder="Entrez le mot de passe">
+    <button onclick="verifierMdp()">Se connecter</button>
+    <p id="erreur" style="color: red; display: none;">Mot de passe incorrect.</p>
+  </div>
+
+  <div class="panel" id="adminPanel">
+    <h2>📦 Commandes reçues</h2>
+    <div id="commandes"></div>
+  </div>
+
+  <script>
+    const mdpCorrect = "Jefesteamflex";
+
+    function verifierMdp() {
+      const input = document.getElementById("mdp").value;
+      if(input === mdpCorrect){
+        document.querySelector(".login").style.display = "none";
+        document.getElementById("adminPanel").style.display = "block";
+        chargerCommandes();
+      } else {
+        document.getElementById("erreur").style.display = "block";
+      }
+    }
+
+    function chargerCommandes() {
+      fetch("commandes.json")
+        .then(res => res.json())
+        .then(data => {
+          const container = document.getElementById("commandes");
+          data.forEach(cmd => {
+            const div = document.createElement("div");
+            div.classList.add("commande");
+            div.innerHTML = `
+              <p><strong>Jeux :</strong> ${cmd.jeux}</p>
+              <p><strong>Email :</strong> ${cmd.email}</p>
+              <p><strong>WhatsApp :</strong> ${cmd.whatsapp}</p>
+              <p><strong>Remarques :</strong> ${cmd.message}</p>
+              <p><strong>Statut :</strong> <span class="statut ${cmd.statut.toLowerCase()}">${cmd.statut}</span></p>
+            `;
+            container.appendChild(div);
+          });
+        })
+        .catch(() => {
+          document.getElementById("commandes").innerHTML = "Erreur de chargement.";
+        });
+    }
+  </script>
+</body>
+</html>
