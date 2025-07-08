@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Merci pour votre commande - SteamFlex Store</title>
 
-  <!-- ⚡ Script de thème AVANT le chargement de la page -->
+  <!-- Appliquer le thème sauvegardé -->
   <script>
     if (localStorage.getItem('theme') === 'light') {
       document.documentElement.classList.add('light');
@@ -51,20 +51,6 @@
     a:hover {
       border-color: #1763c6;
     }
-    button#toggle-mode {
-      padding: 0.6rem 1.2rem;
-      font-size: 1rem;
-      border: none;
-      border-radius: 10px;
-      background: #1e90ff;
-      color: white;
-      cursor: pointer;
-      box-shadow: 0 4px 8px #1763c6cc;
-      transition: background 0.3s ease;
-    }
-    button#toggle-mode:hover {
-      background: #1763c6;
-    }
   </style>
 </head>
 <body>
@@ -77,30 +63,6 @@
   </p>
 
   <a href="index.html" aria-label="Retour à la page d'accueil">← Retour à l'accueil</a>
-
-  <button id="toggle-mode">🌙 Mode clair</button>
-
-  <script>
-    const toggleBtn = document.getElementById('toggle-mode');
-
-    function updateTheme() {
-      const html = document.documentElement;
-      if (html.classList.contains('light')) {
-        toggleBtn.textContent = '🌙 Mode sombre';
-      } else {
-        toggleBtn.textContent = '☀️ Mode clair';
-      }
-    }
-
-    toggleBtn.onclick = () => {
-      document.documentElement.classList.toggle('light');
-      const isLight = document.documentElement.classList.contains('light');
-      localStorage.setItem('theme', isLight ? 'light' : 'dark');
-      updateTheme();
-    };
-
-    updateTheme(); // init texte bouton
-  </script>
 
 </body>
 </html>
