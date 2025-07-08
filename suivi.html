@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Suivi de votre commande - SteamFlex Store</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #121212;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      padding: 2rem;
+      text-align: center;
+    }
+    h1 {
+      color: #1e90ff;
+      margin-bottom: 1rem;
+    }
+    input, button {
+      font-size: 1.1rem;
+      padding: 10px 15px;
+      border-radius: 8px;
+      border: none;
+      margin: 0.5rem 0;
+    }
+    input {
+      width: 250px;
+      max-width: 90vw;
+    }
+    button {
+      background: #1e90ff;
+      color: white;
+      cursor: pointer;
+      font-weight: 700;
+      transition: background 0.3s;
+      width: 150px;
+    }
+    button:hover {
+      background: #1763c6;
+    }
+    .status {
+      margin-top: 1.5rem;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      background: #222d3a;
+      box-shadow: 0 0 10px #1763c6aa;
+      min-width: 300px;
+      max-width: 90vw;
+    }
+    .status p {
+      font-size: 1.2rem;
+      margin: 0.5rem 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Suivi de votre commande</h1>
+  <p>Veuillez entrer votre identifiant de commande ci-dessous pour voir son statut.</p>
+
+  <input type="text" id="orderId" placeholder="Numéro de commande ou email" aria-label="Identifiant de commande" />
+  <button id="checkBtn">Vérifier</button>
+
+  <div id="result" class="status" aria-live="polite" style="display:none;"></div>
+
+  <script>
+    // Simule une base de données de commandes (à remplacer par un vrai backend)
+    const commandes = {
+      "12345": { status: "Commande reçue, en attente de paiement." },
+      "67890": { status: "Paiement confirmé, préparation en cours." },
+      "abcde": { status: "Commande expédiée, livraison en cours." },
+      "client@email.com": { status: "Commande livrée. Merci pour votre confiance !" }
+    };
+
+    const checkBtn = document.getElementById('checkBtn');
+    const result = document.getElementById('result');
+    const orderIdInput = document.getElementById('orderId');
+
+    checkBtn.addEventListener('click', () => {
+      const id = orderIdInput.value.trim();
+      if(!id) {
+        result.style.display = 'block';
+        result.textContent = "Veuillez entrer un identifiant de commande.";
+        return;
+      }
+      if(commandes[id]) {
+        result.style.display = 'block';
+        result.textContent = commandes[id].status;
+      } else {
+        result.style.display = 'block';
+        result.textContent = "Aucune commande trouvée avec cet identifiant.";
+      }
+    });
+
+    // Optionnel: trigger check quand on appuie sur Entrée
+    orderIdInput.addEventListener('keypress', e => {
+      if(e.key === 'Enter') {
+        checkBtn.click();
+      }
+    });
+  </script>
+</body>
+</html>
