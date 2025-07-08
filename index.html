@@ -373,17 +373,18 @@
     color: #63a4ff;
   }
 
-  /* QR code container */
-  #whatsapp-qr {
-    margin-top: 30px;
+  /* QR code style */
+  .qr-container {
     text-align: center;
-    color: #1e90ff;
+    margin-top: 1rem;
+  }
+  .qr-container img {
+    width: 150px;
+    height: 150px;
+    border-radius: 20px;
+    box-shadow: 0 0 15px #1763c6cc;
   }
 </style>
-
-<!-- QR code lib -->
-<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
-
 </head>
 <body>
 
@@ -399,36 +400,36 @@
   </section>
 
   <section class="card form-card" aria-label="Formulaire de commande">
-    <h2>📦 Passe ta commande ici</h2>
+    <h2>📦 Passez votre commande ici</h2>
     <form action="https://formsubmit.co/achatdejeuxsteam@gmail.com" method="POST">
       <label for="games">🎮 Jeux demandés :</label>
-      <textarea id="games" name="Jeux_demandes" rows="4" placeholder="Ex: FC 24, GTA V, Elden Ring..."></textarea>
+      <textarea id="games" name="Jeux_demandes" rows="4" placeholder="Ex: FC 24, GTA V, Elden Ring..." required></textarea>
 
       <label for="email">📧 Votre email :</label>
       <input type="email" id="email" name="Email_client" required />
 
       <label for="whatsapp">📱 Numéro WhatsApp (optionnel) :</label>
-      <input type="text" id="whatsapp" name="Whatsapp" />
+      <input type="text" id="whatsapp" name="Whatsapp" placeholder="+227 76 99 06 92" />
 
       <label for="msg">💬 Remarques (optionnel) :</label>
       <textarea id="msg" name="Message_client" rows="3"></textarea>
 
+      <!-- Formsubmit hidden inputs pour améliorer l'email -->
       <input type="hidden" name="_captcha" value="false" />
       <input type="hidden" name="_next" value="https://steamflex.github.io/Steamflex_store/merci.html" />
+      <input type="hidden" name="_template" value="table" />
 
       <button type="submit">🚀 Envoyer la commande</button>
     </form>
 
     <div class="whatsapp-contact">
+      <p>Pour un contact rapide, scannez ce QR Code WhatsApp :</p>
+      <div class="qr-container">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?data=https%3A%2F%2Fwa.me%2F22776990692&size=150x150" alt="QR Code WhatsApp SteamFlex" />
+      </div>
       <a href="https://wa.me/22776990692" target="_blank" rel="noopener noreferrer" aria-label="Contact WhatsApp">
         💬 Contactez-nous sur WhatsApp
       </a>
-    </div>
-
-    <!-- QR code WhatsApp -->
-    <div id="whatsapp-qr">
-      <h3>📱 Scannez pour nous contacter sur WhatsApp</h3>
-      <canvas id="qrcode"></canvas>
     </div>
   </section>
 </main>
@@ -494,14 +495,6 @@
     if(e.key === 'Escape' && infoModal.classList.contains('active')) {
       infoModal.classList.remove('active');
     }
-  });
-
-  // Génération QR code WhatsApp
-  const urlWhatsApp = "https://wa.me/22776990692"; // lien WhatsApp
-  const canvas = document.getElementById('qrcode');
-
-  QRCode.toCanvas(canvas, urlWhatsApp, { width: 180 }, function (error) {
-    if (error) console.error(error);
   });
 </script>
 
