@@ -4,6 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Merci pour votre commande - SteamFlex Store</title>
+
+  <!-- ⚡ Script de thème AVANT le chargement de la page -->
+  <script>
+    if (localStorage.getItem('theme') === 'light') {
+      document.documentElement.classList.add('light');
+    }
+  </script>
+
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -19,7 +27,7 @@
       text-align: center;
       transition: background 0.3s, color 0.3s;
     }
-    body.light {
+    html.light body {
       background: #f5f7fa;
       color: #222;
     }
@@ -73,24 +81,25 @@
   <button id="toggle-mode">🌙 Mode clair</button>
 
   <script>
-    const body = document.body;
     const toggleBtn = document.getElementById('toggle-mode');
 
-    if(localStorage.getItem('theme') === 'light') {
-      body.classList.add('light');
-      toggleBtn.textContent = '🌙 Mode sombre';
+    function updateTheme() {
+      const html = document.documentElement;
+      if (html.classList.contains('light')) {
+        toggleBtn.textContent = '🌙 Mode sombre';
+      } else {
+        toggleBtn.textContent = '☀️ Mode clair';
+      }
     }
 
     toggleBtn.onclick = () => {
-      body.classList.toggle('light');
-      if(body.classList.contains('light')) {
-        toggleBtn.textContent = '🌙 Mode sombre';
-        localStorage.setItem('theme', 'light');
-      } else {
-        toggleBtn.textContent = '☀️ Mode clair';
-        localStorage.setItem('theme', 'dark');
-      }
+      document.documentElement.classList.toggle('light');
+      const isLight = document.documentElement.classList.contains('light');
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+      updateTheme();
     };
+
+    updateTheme(); // init texte bouton
   </script>
 
 </body>
